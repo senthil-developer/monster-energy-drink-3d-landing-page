@@ -7,3 +7,12 @@ body,
 :root {
   height: 100%;
 }
+
+.bg {
+  background: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 1) 1%,
+    rgba(27, 27, 223, 1) 30%,
+    rgba(2, 0, 36, 1) 100%
+  );
+}

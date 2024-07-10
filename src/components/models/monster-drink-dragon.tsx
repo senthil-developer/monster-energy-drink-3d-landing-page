@@ -24,7 +24,6 @@ export function MonsterDrinkDragon(props: JSX.IntrinsicElements["group"]) {
 
   const material = materials["Material.002"];
   model != null && (material.map = changeMaterial(model));
-
   return (
     <group {...props} ref={monsterRef} dispose={null}>
       <mesh

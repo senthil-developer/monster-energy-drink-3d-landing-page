@@ -2,45 +2,31 @@ import React, { useState } from "react";
 import MonsterLogo from "./components/monster-logo";
 import { Scene } from "./components/Scene";
 import ViewModel from "./components/view-model";
-import { useModel } from "./hooks/useModel";
-
-interface ButtonProps {
-  setOpenModel: (prevOpen: boolean) => void;
-  children: React.ReactNode;
-}
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const App = () => {
-  const [openModel, setOpenModel] = useState(false);
-
   return (
-    <div className=" min-h-[100vh] text-white flex justify-center pt-2 relative">
-      <MonsterLogo />
+    <div className="h-full text-white pt-2 relative bg">
       <div className="w-full h-full absolute inset-0">
         <Scene />
       </div>
-      <div className="absolute top-5 right-5 bg-red-500 z-10">
-        <Button setOpenModel={setOpenModel}>
-          {openModel ? "Close" : "Open"}
-        </Button>
+
+      {/* content */}
+      <div className="content flex flex-col items-center gap-20 justify-center h-full">
+        <div className="relative">
+          <MonsterLogo fill={true} className="size-96" />
+          <MonsterLogo
+            fill={false}
+            className="size-96 absolute inset-0 z-[2]"
+          />
+        </div>
       </div>
-      {openModel && <ViewModel />}
+      {/* button */}
+
+      <ViewModel />
     </div>
   );
 };
 
 export default App;
-
-const Button: React.FC<ButtonProps> = ({ setOpenModel, children }) => {
-  const { setIsOpen, isOpen } = useModel();
-  return (
-    <button
-      className="bg-blue-400 text-white p-2 rounded-md transition-all"
-      onClick={() => {
-        setOpenModel((prevOpen) => !prevOpen);
-        setIsOpen(!isOpen);
-      }}
-    >
-      {children}
-    </button>
-  );
-};

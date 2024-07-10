@@ -1,35 +1,18 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { MonsterDrinkBlack } from "./models/monster-drink-black";
 import { MonsterDrinkDragon } from "./models/monster-drink-dragon";
-import { Environment, OrbitControls } from "@react-three/drei";
-import { SpotLight } from "@react-three/drei";
-import { useModel } from "../hooks/useModel";
+import { OrbitControls } from "@react-three/drei";
 
 export function Scene() {
-  const { isOpen } = useModel();
-  return !isOpen ? (
+  return (
     <Suspense fallback={<p>Loading....</p>}>
-      <Canvas shadows className="z-[2]">
-        <Environment preset="apartment" />
-        <SpotLight intensity={1} position={[1, -29, 1]} />
-        <pointLight position={[10, 10, 10]} />
-        <MonsterDrinkBlack position={[0, 0, -20]} />
+      <Canvas shadows className="z-[2] bg-transparent">
+        <ambientLight intensity={3} />
+        <pointLight position={[12, 5, 10]} intensity={200} />
+        <MonsterDrinkDragon position={[0, 0.5, 0]} />
+
+        <OrbitControls enablePan={false} minDistance={2} maxDistance={7} />
       </Canvas>
     </Suspense>
-  ) : (
-    <ModelCanvas />
   );
 }
-
-const ModelCanvas = () => {
-  return (
-    <Canvas shadows className="z-[2]">
-      <Environment preset="apartment" />
-      <SpotLight intensity={1} position={[1, -29, 1]} />
-      <pointLight position={[10, 10, 10]} />
-      <OrbitControls />
-      <MonsterDrinkDragon />
-    </Canvas>
-  );
-};
