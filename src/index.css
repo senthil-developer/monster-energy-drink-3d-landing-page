@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,11 +10,17 @@ body,
   height: 100%;
 }
 
-.bg {
-  background: radial-gradient(
-    circle,
-    rgba(2, 0, 36, 1) 1%,
-    rgba(27, 27, 223, 1) 30%,
-    rgba(2, 0, 36, 1) 100%
+@layer components {
+  .text {
+    @apply absolute text-center text-[clamp(24px,10vw,200px)] uppercase font-extrabold leading-[0.8] tracking-[10px];
+  }
+}
+
+body {
+  background-image: repeating-conic-gradient(
+    from 99deg,
+    #ff0000 0deg 180deg,
+    #2588da 180deg 360deg
   );
+  background-repeat: no-repeat;
 }

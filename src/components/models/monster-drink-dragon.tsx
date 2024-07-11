@@ -3,6 +3,11 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { useModel } from "../../hooks/useModel";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -23,14 +28,64 @@ export function MonsterDrinkDragon(props: JSX.IntrinsicElements["group"]) {
   const { model } = useModel();
 
   const material = materials["Material.002"];
-  model != null && (material.map = changeMaterial(model));
+  material.map = changeMaterial(model);
+
+  useGSAP(() => {
+    if (monsterRef.current) {
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "back.out(1.4)",
+          duration: 2.5,
+        },
+      });
+      tl.from(monsterRef.current?.position, {
+        y: 20,
+      })
+        .from(
+          monsterRef.current?.rotation,
+          {
+            z: 2,
+          },
+          "-=2.3"
+        )
+        .from(
+          monsterRef.current?.scale,
+          {
+            x: "2",
+            y: "2",
+            z: "2",
+          },
+          "-=2.3"
+        );
+
+      gsap.to(monsterRef.current?.rotation, {
+        y: 4,
+        scrollTrigger: {
+          trigger: ".content",
+          start: "top 90%",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      gsap.to(monsterRef.current?.position, {
+        x: -2,
+        scrollTrigger: {
+          trigger: ".content",
+          start: "top 90%",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+    }
+  });
+
   return (
     <group {...props} ref={monsterRef} dispose={null}>
       <mesh
         geometry={nodes.Object_6.geometry}
         material={materials["Material.002"]}
-        rotation={[-Math.PI / 2, 0, 1.5]}
-        position={[0, -2, 0]}
+        rotation={[-Math.PI / 2, 0, -0.5]}
       />
     </group>
   );
@@ -45,9 +100,8 @@ function changeMaterial(texture: "dragon" | "lycheee" | "pineapple" | null) {
     pineapple: "monster-drink-dragon/textures/Material_baseColor.png",
   };
 
-  const newTexture = textureLoader.load(option[texture!]);
+  const Texture = textureLoader.load(option[texture!]);
 
-  newTexture.flipY = false;
-
-  return newTexture;
+  Texture.flipY = false;
+  return Texture;
 }

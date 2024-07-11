@@ -19,7 +19,7 @@ const ViewModel = () => {
       )}
     >
       {isOpen && (
-        <div className="flex gap-3">
+        <div className="flex gap-3 bg-red-500 relative w-[460px] h-[150px] z-[10]">
           <ModelList />
         </div>
       )}
@@ -40,12 +40,18 @@ const ModelList = () => {
   ];
 
   const { model: currentModel, setModel } = useModel();
+
   useGSAP(() => {
-    gsap.to(".model", {
-      x: "2",
+    gsap.from(".model", {
+      position: "absolute",
+      left: "50%",
+      bottom: "-10%",
+      translate: "-50%",
+      scale: 0.1,
       stagger: 0.1,
     });
   });
+
   return modelList.map((model: ModelListType) => (
     <button
       key={model.id}

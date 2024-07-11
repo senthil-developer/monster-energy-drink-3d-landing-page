@@ -8,6 +8,6 @@ interface ModelTypes {
 }
 
 export const useModel = create<ModelTypes>((set) => ({
-  model: "dragon",
+  model: "pineapple",
   setModel: (newModel) => set({ model: newModel }),
 }));

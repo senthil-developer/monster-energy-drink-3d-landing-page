@@ -6,12 +6,10 @@ import { OrbitControls } from "@react-three/drei";
 export function Scene() {
   return (
     <Suspense fallback={<p>Loading....</p>}>
-      <Canvas shadows className="z-[2] bg-transparent">
+      <Canvas shadows className="z-[2]">
         <ambientLight intensity={3} />
         <pointLight position={[12, 5, 10]} intensity={200} />
-        <MonsterDrinkDragon position={[0, 0.5, 0]} />
-
-        <OrbitControls enablePan={false} minDistance={2} maxDistance={7} />
+        <MonsterDrinkDragon position={[0, -2, 0]} />
       </Canvas>
     </Suspense>
   );
